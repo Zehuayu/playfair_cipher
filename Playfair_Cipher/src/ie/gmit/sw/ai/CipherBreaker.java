@@ -1,9 +1,9 @@
-package src.ie.gmit.ai;
+package ie.gmit.sw.ai;
 
 import java.util.Scanner;
 // resource from https://www.sanfoundry.com/java-program-enode-message-using-playfair-cipher/
 
-public class Runner {
+public class CipherBreaker {
 
 	
 	

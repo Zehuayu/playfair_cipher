@@ -1,4 +1,4 @@
-package src.ie.gmit.ai;
+package ie.gmit.sw.ai;
 
 import java.io.BufferedReader;
 import java.io.File;
