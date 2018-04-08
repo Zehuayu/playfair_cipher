@@ -47,7 +47,7 @@ public class Runner {
 			
 			
 			System.out.println("********************************************************");
-			System.out.println("Copy of the above characters here or put partical key");
+			System.out.println("Copy of the key characters here or put partical key");
 			String key = kb.nextLine().toUpperCase();
 			key = removeDuplicates(key).replaceAll("\\s+","");
 
@@ -76,7 +76,7 @@ public class Runner {
 			printCipher();
 		//	message = message.readFile();
 			System.out.println(message);
-			System.out.println(message.length());
+			System.out.println("the string has " + message.length()+ " character");
 		
 		//	message = message.replaceAll("\\s+","");
 
