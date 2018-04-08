@@ -1,6 +1,7 @@
 package src.ie.gmit.ai;
 
 import java.util.Scanner;
+// resource from https://www.sanfoundry.com/java-program-enode-message-using-playfair-cipher/
 
 public class Runner {
 
@@ -14,42 +15,50 @@ public class Runner {
 		static char[] alphabet = {'A','B','C','D','E','F','G','H','I','K','L',
 			'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
 
-		public static void main(String[] args) {
+		public static void main(String[] args) throws Exception, Throwable {
 
-			System.out.println("*****Playfair Cipher*****");
+			System.out.println("*****************Playfair Cipher*******************");
+			System.out.println("*********welcome to En/Decrypt program*************");
 			System.out.println();
 
-			System.out.print("Please write the key: ");
+			
 			Scanner kb = new Scanner (System.in);
+
+			//do {
+			System.out.println("********************************************************");
+			System.out.print("Do you want to encrypt or decrypt (E/D)? ");
+			System.out.println("\n********************************************************");
+			answer = kb.nextLine().toUpperCase();		
+			
+			
+		//	System.out.print("Please write the key: ");
+			
+			
+			
+			
+			System.out.println("********************************************************");
+			System.out.print("please input the text(example:tip.txt): ");
+			System.out.println("\n********************************************************");
+			
+			Shufflekey sl = new Shufflekey();
+			String fileName = kb.nextLine(); 
+			String message = new FileHandler().readFile(fileName);
+			String mess = sl.CiperBreaker(10, 50000, 1, message.toString());
+			
+			
+			System.out.println("********************************************************");
+			System.out.println("Copy of the above characters here or put partical key");
 			String key = kb.nextLine().toUpperCase();
 			key = removeDuplicates(key).replaceAll("\\s+","");
 
-
-			//do {
-			System.out.print("Do you want to encrypt or decrypt (E/D)? ");
-			answer = kb.nextLine().toUpperCase();
-			//}while(!answer.equals("E") || !answer.equals("D"));
-
-			System.out.print("\nPlease write the message: ");
-			message = kb.nextLine().toUpperCase();
-
-			// Remueve espacios en blanco en el string
-			message = message.replaceAll("\\s+","");
-
-			// Remove J
-			key = key.replaceAll("J", " ");
-			key = key.replaceAll("\\s", "");
-
-
-			// Remueve las letras que se repitan entre la llave y el alfabeto
 			for(int i = 0; i < 25; i++) {
 				StringBuilder k = new StringBuilder(key);
-				if(key.indexOf(alphabet[i]) == -1)  // -1 significa que la letra no se repite
+				if(key.indexOf(alphabet[i]) == -1)  
 					k.append(alphabet[i]);
 				key = k.toString();
 			}
 
-			// Añade la llave y el alfabeto a la matriz
+			
 			for(int i = 0; i < 5; i++) {
 				for(int j = 0; j < 5; j++) {
 					if(index < key.length()) {
@@ -60,16 +69,28 @@ public class Runner {
 						cipher[i][j] = alphabet[alphIndex++];
 				}
 			}
-
+			
+			key = key.replaceAll("J", " ");
+			key = key.replaceAll("\\s", "");
+			System.out.println("********************************************************");
 			printCipher();
+		//	message = message.readFile();
+			System.out.println(message);
+			System.out.println(message.length());
+		
+		//	message = message.replaceAll("\\s+","");
 
-			// Agrega una X al final del mensaje si su numero de caracteres es impar	
+			// Remove J
+			
+
+	
 			if(message.length() % 2 != 0) {
 				StringBuilder ex = new StringBuilder(message);
 				ex.append("X");
 				message = ex.toString();
 			}
 
+			System.out.println("********************************************************");
 			pairByPair(message);
 
 			if(answer.equals("D"))
@@ -77,19 +98,17 @@ public class Runner {
 			else if(answer.equals("E"))
 				System.out.println("\nThe cipher text is: " + cipherTxt);
 			else
-				System.out.println("Valores invalidos, por favor intente de nuevo");
-
-			kb.close();
+				System.out.println("error command");
 		}
 
-		//***************************************************//
+		
 
 		
 		
 		
 		
 		
-		// Remueve letras que se repitan
+		// remove the repeat character
 		
 		public static String removeDuplicates(String s) {
 			StringBuilder noDupes = new StringBuilder();
@@ -101,7 +120,7 @@ public class Runner {
 			return noDupes.toString();
 		}
 
-		// Imprime el cipher en consola
+		// Print the cipher in console
 		public static void printCipher() {
 			System.out.println();
 			for(int i = 0; i < 5; i++) {
@@ -113,9 +132,9 @@ public class Runner {
 		}
 
 
-		//***************************************************//
+		
 
-		// Envia cada par de letras consecutivas a decifrar o cifrar
+		
 		public static void pairByPair(String message) {
 			char A, B;
 
@@ -140,7 +159,7 @@ public class Runner {
 					//System.out.println("letter : " + message.charAt(i+1));
 					B = message.charAt(i + 1);
 
-				// Agrega un caracter 'X' si hay dos letras iguales consecutivas
+				// Add an 'X' character if there are two consecutive equal letters
 				if(A == B) {
 					B = 'X';
 
@@ -154,7 +173,7 @@ public class Runner {
 					}
 					i-= 1;		
 				}
-				// Sustituye los caracteres de 'J' por caracteres de 'I'
+				
 				if(A == 'J')
 					A = 'I';
 				if(B == 'J')
@@ -169,7 +188,7 @@ public class Runner {
 
 		//***************************************************//
 
-		// Busca la localizacion en la matriz de cada par de letras del mensaje
+	
 		public static String findCharPosition(char A, char B, char[][] matrix) {
 			int msgIndex = 0, rowA = 0, rowB = 0, colA = 0, colB = 0;
 			while(msgIndex < length) {
@@ -193,27 +212,27 @@ public class Runner {
 			return decipherS;
 		}
 
-		//***************************************************//
+	
 
-		// Cifra el mensaje
+		// Encrypt the message
 		public static String encrypt(int rowA, int colA, int rowB, int colB, char[][] matrix) {
 			char s1, s2;
 			StringBuilder pair = new StringBuilder();
-			// si estan en la misma fila
+			// if they are in the same row
 			if(rowA == rowB){
 				s1 = matrix[rowA][(colA + 1) % 5];
 				s2 = matrix[rowB][(colB + 1) % 5];
 				pair.append(s1).append(s2);
 				return pair.toString();
 			}
-			// si estan en la misma columna
+			// if they are in the same column
 			else if(colA == colB) {
 				s1 = matrix[(rowA + 1) % 5][colA];
 				s2 = matrix[(rowB + 1) % 5][colB];
 				pair.append(s1).append(s2);
 				return pair.toString();
 			}
-			// si forman un rectangulo
+			
 			else if(rowA != rowB && colA != colB) {
 				s1 = matrix[rowA][colB];
 				s2 = matrix[rowB][colA];
@@ -222,9 +241,9 @@ public class Runner {
 			return pair.toString();
 		}
 
-		//***************************************************//
+		
 
-		// Decifra el mensaje
+		// Decipher the message
 		public static String decrypt(int rowA, int colA, int rowB, int colB, char[][] matrix) {
 			char s1, s2;
 			StringBuilder pair = new StringBuilder();
@@ -248,4 +267,3 @@ public class Runner {
 			return pair.toString();
 		}
 	}
-
