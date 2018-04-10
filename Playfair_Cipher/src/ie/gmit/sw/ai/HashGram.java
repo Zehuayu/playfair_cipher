@@ -18,7 +18,8 @@ private static final HashMap<String,Double> map = new HashMap<String,Double>();
 	 */
 	private static double total;
 	static{
-		File file = new File("./4grams.txt"); // Read the file
+		//read the 4grams.txt
+		File file = new File("./4grams.txt");
 		InputStream in;
 		try {
 			in = new FileInputStream(file);
@@ -26,14 +27,16 @@ private static final HashMap<String,Double> map = new HashMap<String,Double>();
 	        String line = null;
 	        while((line = br.readLine()) != null){
 	           String[] str = line.split(" ");// Read every line with "" split. 
-	           total = total + Double.parseDouble(str[1]);  // Calculate the total number. 计算总数
+	           total = total + Double.parseDouble(str[1]);  // Calculate the total number. 
 	           map.put(str[0], Double.parseDouble(str[1])); 
+	          
 	        }
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}  
+		
 	}
 	public static double getTotal() {
 		return total;

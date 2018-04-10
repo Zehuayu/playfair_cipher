@@ -2,12 +2,19 @@ package ie.gmit.sw.ai;
 
 import java.util.Random;
 
-public class Shufflekey {
+public class SimulatedAnnealing {
 
 	private static final String initencKey = getParent();
 	private String parent;
 	private String child;
-	private double logProbability;
+	private double logscore;
+	private String keymess;	
+	
+	
+	//static Pairbypair pbp = new Pairbypair();
+	
+
+	//static StringBuilder plain_text = Pairbypair.getPlainTxt();
 	
 	private String shuffle(char[] key) {
 		int index;
@@ -34,6 +41,7 @@ public class Shufflekey {
 		return n;
 	}
 	
+	
 	private static String[] formGrams(String text, int ng) {
 		int len = text.length();
 		String[] res = new String[len - ng + 1];
@@ -44,7 +52,7 @@ public class Shufflekey {
 	}
 	
 	//counter the rate of probability
-	private double getLogProbability() { 
+	private double getLogScore() { 
 		double tempSum = 0;
 		this.child = shuffle(initencKey.toCharArray()); // Temporarily shuffled keys. 
 		// System.out.println("child == " + child);
@@ -62,36 +70,52 @@ public class Shufflekey {
 	
 	public String CiperBreaker(int temp, int transitions, int step, String encMessage) {
 		System.out.println("");
-		System.out.println("Simulated Annealing Algorithm Start............"); 
-		logProbability = getLogProbability();
+		System.out.println("Simulated Annealing running............"); 
+		logscore = getLogScore();
 		// System.out.println(logProbability);
 		this.parent = child;
 		for (int i = temp; i > 0; i -= step) {
+			//System.out.println("......");
 			for (int j = transitions; j > 0; j--) {
-				double fitness = getLogProbability();
-				double delta = fitness - this.logProbability;
+				
+				double f = getLogScore();
+				double delta =  logscore;
 				if (delta > 0) {
-					this.parent = child;
-					this.logProbability = fitness;
+					parent = child;
+					logscore = f;
 				} else if (delta < 0) {
-					double p = 1 / (1 + Math.exp(-delta / temp));
-					if (Math.random() < p) {
-						this.parent = child;
-						this.logProbability = fitness;
+					//Double p = Math.exp(delta/temp);
+					//if (0.5 < p) {
+						parent = child;
+						if(logscore < f)
+							logscore = f;
+						else f = logscore;
 					}
 				}
 			}
-		}
+			
+		keymess = parent;
+		
 		// output the similarity
-		System.out.println(
-				"Simulated Annealing Algorithm End----->[Keys=" + parent + "; Log Similarity=" + logProbability + "]");
-		//String enc = Key.Keydisplay(parent);
+		System.out.println(" Similarity=" + logscore);
+		System.out.println("result is =========[Keys=" + parent  + "]");
+		
 		return null;
 	}
 
-	public void setParent(String parent) {
-		this.parent = parent;
+	
+	
+	
+	
+	public String getKeymess() {
+		return keymess;
 	}
+
+	public void setKeymess(String keymess) {
+		this.keymess = keymess;
+	}
+
+	
 	
 	
 

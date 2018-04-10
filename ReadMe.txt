@@ -14,7 +14,9 @@ The Playfair Cipher
 The Playfair system was invented by Charles Wheatstone, who first described it in 1854.
 The Playfair cipher or Playfair square or Wheatstone-Playfair cipher is a manual symmetric encryption technique and was the first literal digram substitution cipher. The scheme was invented in 1854 by Charles Wheatstone, but bears the name of Lord Playfair for promoting its use.
 
+the Pairbypair class 
 
+this class contain the main encrypt functionality
 
 The FileHander Class
 
@@ -33,9 +35,9 @@ and update the line
 
 
 
-The Runner Class 
+The CipherBreaker Class 
 
-This is main class, Some main function is code here. include the encrypt function and decrypt function.
+This is main class, there is the command line, by this class, the java can run this process.
 
 public static void main(String[] args) throws Exception, Throwable {
 
@@ -57,7 +59,7 @@ The HashGram Class
 
 his file is used to store the contents of the 4-grams file. Key is gram, value is count. Create a static variable named total, used to calculate the total count of the entire file.
 
-The Shufflekey Class
+The SimulatedAnnealing Class
 
 This file uses the shuffle algorithm to obtain the initial key and split it into a 4-grams array. Traverse the cryptogram 4-gram, if it exists, take count and calculate the logarithmic probabilityAnd includes the simulated annealing algorithm
 
